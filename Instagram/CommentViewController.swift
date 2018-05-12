@@ -3,19 +3,23 @@ import Firebase
 import FirebaseDatabase
 import SVProgressHUD
 
+
 class CommentViewController: UIViewController {
 
     @IBOutlet weak var commentText: UITextField!
     
+    // 受け取るためのプロパティ（変数）を宣言しておく
+    var postData: PostData!
+    
     // 投稿ボタンをタップしたときに呼ばれるメソッド
     @IBAction func commentPostButton(_ sender: UIButton) {
-
+        
         // Firebaseに保存するデータの準備
-        let uid = Auth.auth().currentUser?.uid {
-            postData.commentDate.append(uid)
+        if let uid = Auth.auth().currentUser?.uid {
+            postData.commentDate.append("\(Auth.auth().currentUser!.displayName!) : \(commentText.text!)")
         }
         
-        // 増えたIDをFirebaseに保存する
+        // 増えたコメントをFirebaseに保存する
         let postRef = Database.database().reference().child(Const.PostPath).child(postData.id!)
         let commentDate = ["commentDate": postData.commentDate]
         postRef.updateChildValues(commentDate)
@@ -42,8 +46,6 @@ class CommentViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

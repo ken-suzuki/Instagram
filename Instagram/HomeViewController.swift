@@ -168,6 +168,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // comment View Controllerに遷移する
         let commentViewController = self.storyboard?.instantiateViewController(withIdentifier: "Comment") as! CommentViewController
+        
+        // 遷移先のCommentViewControllerで宣言しているpostData値を代入して渡す
+        commentViewController.postData = postData
+        
         self.present(commentViewController, animated: true, completion: nil)
 }
 }
